@@ -27,4 +27,8 @@ public class CompanyEntity {
 
     @Column(nullable = false, unique = true)
     private String name;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Status status;
 }

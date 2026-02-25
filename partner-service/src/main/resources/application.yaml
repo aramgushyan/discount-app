@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: partner-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/partner_db
+    username: postgres
+    password: "1234"
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+
+logging:
+  level:
+    org.flywaydb: DEBUG

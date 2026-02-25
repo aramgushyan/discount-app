@@ -1,0 +1,17 @@
+services:
+  partner-db:
+    image: postgres:16
+    container_name: partner-db
+    restart: unless-stopped
+    shm_size: 128mb
+    environment:
+      POSTGRES_DB: partner_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5433:5432"
+    volumes:
+      - partner_db_data:/var/lib/postgresql/data
+
+volumes:
+  partner_db_data:
