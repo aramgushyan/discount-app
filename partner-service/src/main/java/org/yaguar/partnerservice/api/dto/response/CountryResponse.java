@@ -1,6 +1,6 @@
 package org.yaguar.partnerservice.api.dto.response;
 
-public class CountryResponse {
-    private Long id;
-    private String name;
+import java.util.List;
+
+public record CountryResponse(Long id, String name, List<RegionResponse> regions) {
 }
