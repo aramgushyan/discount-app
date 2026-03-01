@@ -14,11 +14,11 @@ public class UnitEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id")
+    @JoinColumn(name = "company_id",  nullable = false)
     private CompanyEntity company;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "city_id")
+    @JoinColumn(name = "city_id", nullable = false)
     private CityEntity city;
 
     @Column(nullable = false)

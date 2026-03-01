@@ -1,11 +1,25 @@
 package org.yaguar.partnerservice.mapper;
 
 import org.mapstruct.Mapper;
-import org.yaguar.partnerservice.api.dto.response.RegionResponse;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.yaguar.partnerservice.api.dto.request.RegionAddRequest;
+import org.yaguar.partnerservice.api.dto.request.RegionUpdateRequest;
+import org.yaguar.partnerservice.api.dto.response.RegionResponseLong;
+import org.yaguar.partnerservice.api.dto.response.RegionResponseShort;
 import org.yaguar.partnerservice.entity.RegionEntity;
+import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {CityMapper.class})
 public interface RegionMapper {
+    @Mapping(target = "country", source = "countryId")
+    RegionResponseShort toResponseShort(RegionEntity region);
 
-    RegionResponse toResponse(RegionEntity region);
+    RegionResponseLong toResponseLong(RegionEntity region);
+
+    RegionEntity toRegion(RegionAddRequest regionAddRequest);
+
+    List<RegionResponseShort> toResponseShortList(List<RegionEntity> regions);
+
+    void updateRegion(RegionUpdateRequest request, @MappingTarget RegionEntity region);
 }

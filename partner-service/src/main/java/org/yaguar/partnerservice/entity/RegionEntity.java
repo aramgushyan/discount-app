@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "regions")
+@Table(name = "regions", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"name","country_id"})})
 @Getter
 @Setter
 public class RegionEntity {
@@ -26,6 +27,6 @@ public class RegionEntity {
             orphanRemoval = true)
     private List<CityEntity> cities = new ArrayList<>();
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 }

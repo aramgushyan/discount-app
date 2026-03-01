@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "cities")
+@Table(name = "cities",  uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"name", "region_id"})})
 @Getter
 @Setter
 public class CityEntity {
@@ -19,12 +20,6 @@ public class CityEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region_id", nullable = false)
     private RegionEntity region;
-
-    @OneToMany(mappedBy = "city",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private List<UnitEntity> units = new ArrayList<>();
 
     @Column(nullable = false)
     private String name;
