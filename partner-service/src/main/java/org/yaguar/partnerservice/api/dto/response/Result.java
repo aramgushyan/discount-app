@@ -16,5 +16,5 @@ public class Result<T> {
     private String message;
 
     @JsonIgnore
-    private HttpStatus status;
+    private ResultStatus status;
 }

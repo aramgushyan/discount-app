@@ -8,7 +8,7 @@ import org.yaguar.partnerservice.api.dto.response.Result;
 
 import java.util.List;
 
-public interface RegionServiceInterface {
+public interface RegionService {
     Result<List<RegionResponseShort>> findAllRegions();
 
     Result<RegionResponseLong> findRegionById(Long id);

@@ -8,6 +8,7 @@ import org.yaguar.partnerservice.api.dto.request.CountryUpdateRequest;
 import org.yaguar.partnerservice.api.dto.response.CountryResponseLong;
 import org.yaguar.partnerservice.api.dto.response.CountryResponseShort;
 import org.yaguar.partnerservice.api.dto.response.Result;
+import org.yaguar.partnerservice.api.dto.response.ResultStatus;
 import org.yaguar.partnerservice.mapper.CountryMapper;
 import org.yaguar.partnerservice.repository.CountryRepository;
 
@@ -24,45 +25,45 @@ class CountryServiceImpl implements CountryService {
         var countryEntity = countryMapper.toEntity(countryAddRequest);
         var countryResponse = countryMapper.toResponse(countryRepository.save(countryEntity));
 
-        return new Result<>(countryResponse.id(), null, HttpStatus.CREATED);
+        return new Result<>(countryResponse.id(), null, ResultStatus.CREATED);
     }
 
     @Override
     public Result<Void> deleteCountryById(Long id) {
         var optionalCountry = countryRepository.findById(id);
         if (optionalCountry.isEmpty()) {
-            return new Result<>(null,"Country not found", HttpStatus.NOT_FOUND);
+            return new Result<>(null,"Country not found", ResultStatus.NOT_FOUND);
         }
 
         countryRepository.delete(optionalCountry.get());
-        return new Result<>(null, null, HttpStatus.NO_CONTENT);
+        return new Result<>(null, null, ResultStatus.NO_CONTENT);
     }
 
     @Override
     public Result<List<CountryResponseShort>> findAllCountries() {
         var countryList = countryMapper.toResponseForList(countryRepository.findAll());
-        return new Result<>(countryList, null, HttpStatus.OK);
+        return new Result<>(countryList, null, ResultStatus.SUCCESS);
     }
 
     @Override
     public Result<CountryResponseLong> findCountryById(Long id) {
         return countryRepository.findById(id)
-                .map(country -> new Result<>(countryMapper.toResponse(country), null, HttpStatus.OK))
-                .orElseGet(() -> new Result<>(null, "Country not found", HttpStatus.NOT_FOUND));
+                .map(country -> new Result<>(countryMapper.toResponse(country), null, ResultStatus.SUCCESS))
+                .orElseGet(() -> new Result<>(null, "Country not found", ResultStatus.NOT_FOUND));
     }
 
     @Override
     public Result<Void> updateCountry(Long id, CountryUpdateRequest countryUpdateRequest) {
         var optionalCountry = countryRepository.findById(id);
         if (optionalCountry.isEmpty()) {
-            return new Result<>(null, "Country not found", HttpStatus.NOT_FOUND);
+            return new Result<>(null, "Country not found", ResultStatus.NOT_FOUND);
         }
 
         var countryEntity = optionalCountry.get();
         countryMapper.updateCountry(countryUpdateRequest, countryEntity);
 
         countryRepository.save(countryEntity);
-        return new Result<>(null, null, HttpStatus.NO_CONTENT);
+        return new Result<>(null, null, ResultStatus.NO_CONTENT);
     }
 
 }
