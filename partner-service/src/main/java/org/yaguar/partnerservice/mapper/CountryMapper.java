@@ -19,6 +19,7 @@ public interface CountryMapper {
     CountryResponseShort toResponseForList(CountryEntity country);
 
     List<CountryResponseShort> toResponseForList(List<CountryEntity> country);
+    List<CountryResponseLong> toResponseForLongList(List<CountryEntity> country);
 
     void updateCountry(CountryUpdateRequest countryUpdateRequest, @MappingTarget CountryEntity country);
 }

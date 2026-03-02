@@ -1,18 +1,16 @@
 package org.yaguar.partnerservice.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.yaguar.partnerservice.api.dto.request.CountryAddRequest;
 import org.yaguar.partnerservice.api.dto.request.CountryUpdateRequest;
 import org.yaguar.partnerservice.api.dto.response.CountryResponseLong;
-import org.yaguar.partnerservice.api.dto.response.CountryResponseShort;
 import org.yaguar.partnerservice.api.dto.response.Result;
 import org.yaguar.partnerservice.api.dto.response.ResultStatus;
 import org.yaguar.partnerservice.mapper.CountryMapper;
 import org.yaguar.partnerservice.repository.CountryRepository;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +30,7 @@ class CountryServiceImpl implements CountryService {
     public Result<Void> deleteCountryById(Long id) {
         var optionalCountry = countryRepository.findById(id);
         if (optionalCountry.isEmpty()) {
-            return new Result<>(null,"Country not found", ResultStatus.NOT_FOUND);
+            return new Result<>(null, "Country not found", ResultStatus.NOT_FOUND);
         }
 
         countryRepository.delete(optionalCountry.get());
@@ -40,9 +38,10 @@ class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public Result<List<CountryResponseShort>> findAllCountries() {
-        var countryList = countryMapper.toResponseForList(countryRepository.findAll());
-        return new Result<>(countryList, null, ResultStatus.SUCCESS);
+    public Result<Page<CountryResponseLong>> findCountries(Pageable pageable) {
+        var pageCountries = countryRepository.findAll(pageable);
+        var pageResponses = pageCountries.map(countryMapper::toResponse);
+        return new Result<>(pageResponses, null, ResultStatus.SUCCESS);
     }
 
     @Override

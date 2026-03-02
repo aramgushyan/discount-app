@@ -3,6 +3,9 @@ package org.yaguar.partnerservice.api;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -11,11 +14,8 @@ import org.yaguar.partnerservice.api.dto.request.CountryUpdateRequest;
 import org.yaguar.partnerservice.api.dto.response.CountryResponseLong;
 import org.yaguar.partnerservice.api.dto.response.CountryResponseShort;
 import org.yaguar.partnerservice.api.dto.response.Result;
-import org.yaguar.partnerservice.mapper.CountryMapper;
 import org.yaguar.partnerservice.mapper.ResultStatusMapper;
 import org.yaguar.partnerservice.service.CountryService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/countries")
@@ -23,11 +23,17 @@ import java.util.List;
 @Validated
 public class CountryController {
     private final CountryService countryService;
-    private final ResultStatusMapper  resultStatusMapper;
+    private final ResultStatusMapper resultStatusMapper;
 
     @GetMapping
-    public ResponseEntity<Result<List<CountryResponseShort>>> findAllCountries() {
-        var countryListResult = countryService.findAllCountries();
+    public ResponseEntity<Result<Page<CountryResponseShort>>> findAllCountries(@RequestParam(defaultValue = "0") int page,
+                                                                               @RequestParam(defaultValue = "15") int size) {
+        int maxSize = 30;
+        int minPage = 0;
+        size = Math.min(size, maxSize);
+        page = Math.max(page, minPage);
+
+        var countryListResult = countryService.findCountries(PageRequest.of(page, size, Sort.by("name").ascending()));
         return new ResponseEntity<>(countryListResult, resultStatusMapper.toHttpStatus(countryListResult.getStatus()));
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", uses = {CityMapper.class})
 public interface RegionMapper {
-    @Mapping(target = "country", source = "countryId")
+    @Mapping(source = "country.id", target = "countryId")
     RegionResponseShort toResponseShort(RegionEntity region);
 
     RegionResponseLong toResponseLong(RegionEntity region);
