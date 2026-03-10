@@ -18,12 +18,12 @@ import java.util.List;
 @Validated
 public class RegionController {
     private final RegionService  regionService;
-
-    @GetMapping
-    public ResponseEntity<Result<List<RegionResponseShort>>> findAllRegionsByCountryId() {
-        var result = new Result<List<RegionResponseShort>>();
-        return ResponseEntity.status(result.getStatus()).body(result);
-    }
+//
+//    @GetMapping
+//    public ResponseEntity<Result<List<RegionResponseShort>>> findAllRegionsByCountryId() {
+//        var result = new Result<List<RegionResponseShort>>();
+//        return ResponseEntity.status(result.getStatus()).body(result);
+//    }
 
 
 }

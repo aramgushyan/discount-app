@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.yaguar.partnerservice.api.dto.request.CountryAddRequest;
 import org.yaguar.partnerservice.api.dto.request.CountryUpdateRequest;
 import org.yaguar.partnerservice.api.dto.response.CountryResponseLong;
-import org.yaguar.partnerservice.api.dto.response.CountryResponseShort;
 import org.yaguar.partnerservice.api.dto.response.Result;
 import org.yaguar.partnerservice.mapper.ResultStatusMapper;
 import org.yaguar.partnerservice.service.CountryService;
@@ -26,7 +25,7 @@ public class CountryController {
     private final ResultStatusMapper resultStatusMapper;
 
     @GetMapping
-    public ResponseEntity<Result<Page<CountryResponseShort>>> findAllCountries(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<Result<Page<CountryResponseLong>>> findAllCountries(@RequestParam(defaultValue = "0") int page,
                                                                                @RequestParam(defaultValue = "15") int size) {
         int maxSize = 30;
         int minPage = 0;
