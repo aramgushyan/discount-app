@@ -12,7 +12,6 @@ import org.yaguar.partnerservice.api.dto.response.Result;
 import org.yaguar.partnerservice.api.dto.response.ResultStatus;
 import org.yaguar.partnerservice.entity.Status;
 import org.yaguar.partnerservice.mapper.CompanyMapper;
-import org.yaguar.partnerservice.mapper.CountryMapper;
 import org.yaguar.partnerservice.repository.CompanyRepository;
 
 @Service
@@ -32,7 +31,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public Result<CompanyResponseLong> findById(Long id) {
         return companyRepository.findByIdAndStatus(id, Status.Active)
-                .map( companyEntity -> new Result<>(companyMapper.toLongResponse(companyEntity),
+                .map(companyEntity -> new Result<>(companyMapper.toLongResponse(companyEntity),
                         null, ResultStatus.SUCCESS))
                 .orElse(new Result<>(null, "Company not found", ResultStatus.NOT_FOUND));
     }
@@ -61,7 +60,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public Result<Void> deleteCompany(Long id) {
         var companyEntity = companyRepository.findById(id);
-        if(companyEntity.isEmpty()) {
+        if (companyEntity.isEmpty()) {
             return new Result<>(null, "Company not found", ResultStatus.NOT_FOUND);
         }
 
