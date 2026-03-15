@@ -10,10 +10,11 @@ import org.yaguar.partnerservice.entity.CityEntity;
 import org.yaguar.partnerservice.entity.CompanyEntity;
 import org.yaguar.partnerservice.entity.UnitEntity;
 
-@Mapper(uses = {CityMapper.class, CompanyMapper.class})
+@Mapper(componentModel = "spring", uses = {CityMapper.class, CompanyMapper.class})
 public interface UnitMapper {
     @Mapping(target = "company", source = "company")
     @Mapping(target = "city", source = "city")
+    @Mapping(target = "id", ignore = true)
     UnitEntity toEntity(UnitAddRequest unitAddRequest, CompanyEntity company, CityEntity city);
 
     UnitResponse toResponse(UnitEntity unitEntity);

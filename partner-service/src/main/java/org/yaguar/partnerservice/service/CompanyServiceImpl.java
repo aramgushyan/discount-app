@@ -16,7 +16,7 @@ import org.yaguar.partnerservice.repository.CompanyRepository;
 
 @Service
 @RequiredArgsConstructor
-public class CompanyServiceImpl implements CompanyService {
+class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
     private final CompanyMapper companyMapper;
 

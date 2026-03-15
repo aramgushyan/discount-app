@@ -17,7 +17,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class RegionServiceImpl implements RegionService {
+class RegionServiceImpl implements RegionService {
     private final RegionMapper regionMapper;
     private final RegionRepository regionRepository;
     private final CountryRepository countryRepository;

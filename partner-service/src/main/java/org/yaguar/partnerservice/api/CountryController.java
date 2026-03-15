@@ -2,6 +2,7 @@ package org.yaguar.partnerservice.api;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,17 +21,15 @@ import org.yaguar.partnerservice.service.CountryService;
 @RequestMapping("/api/v1/countries")
 @RequiredArgsConstructor
 @Validated
-public class CountryController {
+class CountryController {
     private final CountryService countryService;
     private final ResultStatusMapper resultStatusMapper;
 
     @GetMapping
-    public ResponseEntity<Result<Page<CountryResponseLong>>> findAllCountries(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<Result<Page<CountryResponseLong>>> findAllCountries(@RequestParam(defaultValue = "0") @PositiveOrZero int page,
                                                                                @RequestParam(defaultValue = "15") int size) {
         int maxSize = 30;
-        int minPage = 0;
         size = Math.min(size, maxSize);
-        page = Math.max(page, minPage);
 
         var countryListResult = countryService.findCountries(PageRequest.of(page, size, Sort.by("name").ascending()));
         return new ResponseEntity<>(countryListResult, resultStatusMapper.toHttpStatus(countryListResult.getStatus()));

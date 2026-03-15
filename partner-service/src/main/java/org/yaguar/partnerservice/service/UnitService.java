@@ -12,7 +12,7 @@ public interface UnitService {
 
     Result<UnitResponse> findById(Long id);
 
-    Result<Long> createUnit(Long companyId, UnitAddRequest unitAddRequest);
+    Result<Long> createUnit(UnitAddRequest unitAddRequest);
 
     Result<Void> deleteById(Long id);
 

@@ -17,7 +17,7 @@ import org.yaguar.partnerservice.repository.UnitRepository;
 
 @Service
 @RequiredArgsConstructor
-public class UnitServiceImpl implements UnitService {
+class UnitServiceImpl implements UnitService {
     private final UnitRepository unitRepository;
     private final CompanyRepository companyRepository;
     private final CityRepository cityRepository;
@@ -38,8 +38,8 @@ public class UnitServiceImpl implements UnitService {
     }
 
     @Override
-    public Result<Long> createUnit(Long companyId, UnitAddRequest unitAddRequest) {
-        var company = companyRepository.findByIdAndStatus(companyId, Status.Active);
+    public Result<Long> createUnit(UnitAddRequest unitAddRequest) {
+        var company = companyRepository.findByIdAndStatus(unitAddRequest.companyId(), Status.Active);
         if (company.isEmpty()) {
             return new Result<>(null, "Company not found", ResultStatus.NOT_FOUND);
         }
