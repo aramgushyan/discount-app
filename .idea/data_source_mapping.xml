@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourcePerFileMappings">
+    <file url="file://$PROJECT_DIR$/auth-service/src/main/java/org/yaguar/authservice/repository/UserRepositoryImpl.java" value="9a123601-bfea-4b1d-ab4d-6605c7e77f36" />
+    <file url="file://$PROJECT_DIR$/auth-service/src/main/resources/db/migration/V1_Init.sql" value="9a123601-bfea-4b1d-ab4d-6605c7e77f36" />
+  </component>
+</project>

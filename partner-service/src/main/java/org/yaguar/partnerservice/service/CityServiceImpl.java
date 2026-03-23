@@ -2,6 +2,8 @@ package org.yaguar.partnerservice.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.yaguar.partnerservice.api.dto.request.CityAddRequest;
 import org.yaguar.partnerservice.api.dto.request.CityUpdateRequest;
 import org.yaguar.partnerservice.api.dto.response.CityResponseLong;
@@ -33,6 +35,7 @@ class CityServiceImpl implements CityService {
         return new Result<>(cityMapper.toCityResponseShortList(cityRepository.findAll()), null, ResultStatus.SUCCESS);
     }
 
+    @Transactional()
     @Override
     public Result<Long> createCity(CityAddRequest cityAddRequest) {
         var optionalRegion = regionRepository.findById(cityAddRequest.regionId());
